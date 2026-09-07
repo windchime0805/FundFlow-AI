@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FundFlow AI — Your AI Agent for Grants & Funding" />
+  <title>FundFlow AI — Funding Intelligence Dashboard</title>
+  <link rel="stylesheet" href="Style.css" />
+  <!-- SECURITY: No API keys or credentials in this file. All secrets are backend-only (.env / App.py). -->
+</head>
+<body>
+
+<div class="app-shell" id="app-shell">
+
+  <!-- ══════════════════ SIDEBAR ══════════════════ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar__logo">
+      <!-- FF + arrow logo mark -->
+      <div class="logo-icon-wrap">
+        <svg class="logo-svg" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="28" height="28" rx="6" fill="rgba(255,255,255,0.15)"/>
+          <!-- F letterform -->
+          <path d="M6 7h8v2.5H8.5V13H14v2.5H8.5V21H6V7Z" fill="white"/>
+          <!-- Arrow up-right -->
+          <path d="M16 8h6v6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M22 8L14.5 15.5" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <!-- Small dot accent -->
+          <circle cx="21" cy="20" r="1.5" fill="rgba(255,255,255,0.7)"/>
+        </svg>
+      </div>
+      <div class="logo-text-wrap">
+        <span class="logo-name">FundFlow AI</span>
+        <span class="logo-sub">Your AI Agent for Grants &amp; Funding</span>
+      </div>
+    </div>
+
+    <nav class="sidebar__nav">
+      <span class="sidebar__section-label">Navigation</span>
+      <a class="nav-link active" data-view="dashboard" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+        Dashboard
+      </a>
+      <a class="nav-link" data-view="profile" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        Startup Profile
+      </a>
+      <a class="nav-link" data-view="results" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        Funding Results
+        <span class="nav-badge" id="nav-count">0</span>
+      </a>
+      <a class="nav-link" data-view="proposal" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Proposal Assistant
+      </a>
+      <a class="nav-link" data-view="tokens" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Token Usage
+      </a>
+      <div class="divider" style="margin:8px 4px;"></div>
+      <a class="nav-link" data-view="settings" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Settings
+      </a>
+    </nav>
+
+    <div class="sidebar__footer">
+      <div class="granite-chip" id="granite-status">
+        <span class="granite-dot granite-dot--idle" id="granite-dot"></span>
+        <span id="granite-label">IBM Granite Ready</span>
+      </div>
+      <div class="sidebar__credit">AI-Powered · Problem #18</div>
+    </div>
+  </aside>
+
+  <!-- ══════════════════ TOP BAR ══════════════════ -->
+  <header class="topbar">
+    <div class="topbar__left">
+      <button class="menu-btn" id="menu-btn" aria-label="Toggle sidebar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <span class="topbar__title" id="page-title">Dashboard</span>
+    </div>
+    <div class="topbar__right">
+      <span class="api-badge" id="api-badge">● API Online</span>
+      <!-- Light / Dark mode toggle -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle dark mode" title="Toggle light/dark mode">🌙</button>
+      <button class="topbar__btn" id="btn-test-granite">Test Granite</button>
+      <!-- User chip -->
+      <div class="user-chip">
+        <div class="user-avatar">I</div>
+        <span>Welcome, Innovator!</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ══════════════════ MAIN ══════════════════ -->
+  <main class="main" id="main">
+
+    <!-- ═══════════ VIEW: DASHBOARD ═══════════ -->
+    <div class="view active" id="view-dashboard">
+
+      <!-- Welcome hero banner -->
+      <div class="welcome-banner">
+        <div class="welcome-text">
+          <div class="welcome-title">Welcome to FundFlow AI</div>
+          <div class="welcome-sub">Intelligent funding discovery powered by IBM Granite</div>
+          <div class="welcome-tagline">Your AI Agent for Grants &amp; Funding</div>
+        </div>
+        <div class="welcome-illustration">
+          <div class="welcome-pills">
+            <span class="welcome-pill">💡 Ideas</span>
+            <span class="welcome-pill">💰 Grants</span>
+            <span class="welcome-pill">📈 Growth</span>
+          </div>
+          <div class="plant-icon">🌱</div>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon-1">🔍</div>
+          <div class="kpi-content">
+            <div class="kpi-label">Opportunities Found</div>
+            <div class="kpi-value" id="kpi-found">—</div>
+            <div class="kpi-sub">Run a search to populate</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon-2">✅</div>
+          <div class="kpi-content">
+            <div class="kpi-label">Eligible Matches</div>
+            <div class="kpi-value" id="kpi-eligible">—</div>
+            <div class="kpi-sub">Fully eligible count</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon-3">🏆</div>
+          <div class="kpi-content">
+            <div class="kpi-label">Best Match Score</div>
+            <div class="kpi-value" id="kpi-best-score">—</div>
+            <div class="kpi-sub">AI relevance score</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon-4">⚡</div>
+          <div class="kpi-content">
+            <div class="kpi-label">Total Tokens Used</div>
+            <div class="kpi-value" id="kpi-tokens">—</div>
+            <div class="kpi-sub">This session</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Agentic Pipeline Visualization -->
+      <div class="card">
+        <div class="card-header">Agentic Pipeline</div>
+        <div class="pipeline-viz">
+          <div class="pipe-step">
+            <div class="pipe-icon">👤</div>
+            <div class="pipe-label">Startup<br>Profile</div>
+          </div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-step">
+            <div class="pipe-icon">🔍</div>
+            <div class="pipe-label">Discovery<br>Agent</div>
+          </div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-step">
+            <div class="pipe-icon">✅</div>
+            <div class="pipe-label">Eligibility<br>Agent</div>
+          </div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-step">
+            <div class="pipe-icon">📊</div>
+            <div class="pipe-label">Ranking<br>Agent</div>
+          </div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-step">
+            <div class="pipe-icon">🔒</div>
+            <div class="pipe-label">Verification<br>Agent</div>
+          </div>
+          <div class="pipe-arrow">→</div>
+          <div class="pipe-step">
+            <div class="pipe-icon">📝</div>
+            <div class="pipe-label">Proposal<br>Assistant</div>
+          </div>
+        </div>
+        <p class="pipeline-note">
+          IBM Granite (<strong>ibm/granite-4-h-small</strong>) powers Eligibility, Ranking &amp; Proposal agents.
+          Discovery uses structured KB matching. Verification grounds results in source records.
+        </p>
+      </div>
+
+      <!-- Legal disclaimer -->
+      <div class="disclaimer-box">
+        <strong>⚠️ Legal &amp; Safety Notice:</strong>
+        FundFlow AI provides AI-assisted funding discovery and draft proposal assistance only.
+        It does <strong>not</strong> submit applications on your behalf. Always verify eligibility
+        requirements, deadlines, and submission rules directly on the official source before applying.
+        AI-generated content is a draft requiring human review and validation.
+      </div>
+    </div><!-- /view-dashboard -->
+
+
+    <!-- ═══════════ VIEW: STARTUP PROFILE ═══════════ -->
+    <div class="view" id="view-profile">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">Startup Profile</h1>
+          <p class="view-sub">Tell us about your startup — we'll find the best-matched funding opportunities.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <form id="profile-form" novalidate autocomplete="off">
+          <div class="form-section-label">Basic Information</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="f-name">Startup Name <span class="req">*</span></label>
+              <input class="form-input" id="f-name" name="name" type="text" placeholder="e.g. HealthBridge AI" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-domain">Industry / Domain <span class="req">*</span></label>
+              <select class="form-select" id="f-domain" name="domain" required>
+                <option value="">— Select domain —</option>
+                <option value="healthtech">HealthTech</option>
+                <option value="edtech">EdTech</option>
+                <option value="fintech">FinTech</option>
+                <option value="agritech">AgriTech</option>
+                <option value="cleantech">CleanTech / GreenTech</option>
+                <option value="deeptech">DeepTech / AI</option>
+                <option value="saas">SaaS / Enterprise Software</option>
+                <option value="biotech">BioTech / MedTech</option>
+                <option value="ecommerce">E-Commerce / D2C</option>
+                <option value="spacetech">SpaceTech</option>
+                <option value="govtech">GovTech / CivicTech</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-stage">Startup Stage <span class="req">*</span></label>
+              <select class="form-select" id="f-stage" name="stage" required>
+                <option value="">— Select stage —</option>
+                <option value="idea">Idea / Concept</option>
+                <option value="pre-seed">Pre-Seed</option>
+                <option value="seed">Seed</option>
+                <option value="series-a">Series A</option>
+                <option value="series-b">Series B+</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-location">Country / Region <span class="req">*</span></label>
+              <input class="form-input" id="f-location" name="location" type="text" placeholder="e.g. India, United States, EU" />
+            </div>
+          </div>
+
+          <div class="form-section-label mt-lg">Business Details</div>
+          <div class="form-grid">
+            <div class="form-group">
+              <label class="form-label" for="f-revenue">Revenue Status</label>
+              <select class="form-select" id="f-revenue" name="revenue_status">
+                <option value="pre-revenue">Pre-Revenue</option>
+                <option value="early-revenue">Early Revenue</option>
+                <option value="revenue">Revenue Generating</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-funding-need">Funding Requirement (USD)</label>
+              <input class="form-input" id="f-funding-need" name="funding_need" type="number" min="0" placeholder="e.g. 500000" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-team-size">Team Size</label>
+              <select class="form-select" id="f-team-size" name="team_size">
+                <option value="">— Select —</option>
+                <option value="1-5">1–5 people</option>
+                <option value="6-15">6–15 people</option>
+                <option value="16-50">16–50 people</option>
+                <option value="51+">51+ people</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-prev-funding">Previous Funding</label>
+              <input class="form-input" id="f-prev-funding" name="previous_funding" type="text" placeholder="e.g. None, Bootstrapped, $50K angel" />
+            </div>
+          </div>
+
+          <div class="form-grid mt-md" style="grid-template-columns:1fr;">
+            <div class="form-group">
+              <label class="form-label" for="f-description">Startup Description <span class="req">*</span></label>
+              <textarea class="form-textarea" id="f-description" name="description" rows="3"
+                placeholder="Describe what your startup does, the problem it solves, and how it works…" required></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-target-users">Target Users / Customers</label>
+              <input class="form-input" id="f-target-users" name="target_users" type="text"
+                placeholder="e.g. Rural healthcare workers, Small-scale farmers, University students" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="f-use-of-funds">Intended Use of Funds</label>
+              <input class="form-input" id="f-use-of-funds" name="use_of_funds" type="text"
+                placeholder="e.g. Product development (60%), Market expansion (30%), Hiring (10%)" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary btn-lg" id="btn-discover">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <span id="btn-discover-text">Discover Funding</span>
+            </button>
+            <button type="reset" class="btn btn-secondary">Clear Form</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Pipeline running status -->
+      <div class="card mt-lg hidden" id="pipeline-status-card">
+        <div class="card-header">Pipeline Running…</div>
+        <div class="pipeline-steps">
+          <div class="ps-item" id="ps-discovery">
+            <div class="ps-dot ps-dot--pending"></div>
+            <span>Funding Discovery Agent</span>
+            <span class="ps-status" id="ps-discovery-status">Waiting</span>
+          </div>
+          <div class="ps-item" id="ps-eligibility">
+            <div class="ps-dot ps-dot--pending"></div>
+            <span>Eligibility Analysis Agent</span>
+            <span class="ps-status" id="ps-eligibility-status">Waiting</span>
+          </div>
+          <div class="ps-item" id="ps-ranking">
+            <div class="ps-dot ps-dot--pending"></div>
+            <span>Match &amp; Ranking Agent</span>
+            <span class="ps-status" id="ps-ranking-status">Waiting</span>
+          </div>
+          <div class="ps-item" id="ps-verification">
+            <div class="ps-dot ps-dot--pending"></div>
+            <span>Verification Agent</span>
+            <span class="ps-status" id="ps-verification-status">Waiting</span>
+          </div>
+        </div>
+      </div>
+    </div><!-- /view-profile -->
+
+
+    <!-- ═══════════ VIEW: FUNDING RESULTS ═══════════ -->
+    <div class="view" id="view-results">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">Funding Results</h1>
+          <p class="view-sub" id="results-subtitle">AI-ranked and source-verified opportunities matched to your startup profile.</p>
+        </div>
+        <div class="flex gap-sm">
+          <button class="btn btn-secondary" id="btn-new-search">New Search</button>
+        </div>
+      </div>
+
+      <div class="filter-bar" id="filter-bar">
+        <span class="filter-label">Filter:</span>
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="eligible">✓ Eligible</button>
+        <button class="filter-chip" data-filter="possibly-eligible">~ Possibly Eligible</button>
+        <button class="filter-chip" data-filter="not-eligible">✗ Not Eligible</button>
+      </div>
+
+      <div id="results-area">
+        <div class="empty-state" id="empty-results">
+          <div class="empty-icon">🔍</div>
+          <div class="empty-title">No results yet</div>
+          <div class="empty-sub">Complete your startup profile and click Discover Funding to see ranked opportunities.</div>
+          <button class="btn btn-primary" id="btn-goto-profile-2">Set Up Profile</button>
+        </div>
+        <div class="opp-grid hidden" id="opp-grid"></div>
+      </div>
+
+      <div class="source-notice mt-lg" id="source-notice" style="display:none;">
+        <strong>📎 About these results:</strong>
+        Funding information is sourced from our curated knowledge base of public funding programs.
+        Match scores and eligibility verdicts are AI-generated estimates — not legal assessments.
+        Always verify on the official source before applying.
+      </div>
+    </div><!-- /view-results -->
+
+
+    <!-- ═══════════ VIEW: PROPOSAL ASSISTANT ═══════════ -->
+    <div class="view" id="view-proposal">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">Proposal Assistant</h1>
+          <p class="view-sub">IBM Granite generates tailored draft components for your selected opportunity.</p>
+        </div>
+      </div>
+
+      <div class="card mb-md">
+        <div class="card-header">Select Opportunity</div>
+        <div id="proposal-opp-list">
+          <p class="text-muted" style="padding:16px;">Run a funding search first to see opportunities here.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header proposal-header">
+          <span>AI-Generated Draft Proposal</span>
+          <div class="flex gap-sm">
+            <button class="btn btn-secondary btn-sm" id="btn-copy-draft" disabled>📋 Copy</button>
+            <button class="btn btn-secondary btn-sm" id="btn-clear-draft" disabled>Clear</button>
+          </div>
+        </div>
+        <div id="proposal-output">
+          <p class="text-muted" style="padding:24px 20px;">
+            Select an opportunity above and click <strong>Generate Draft</strong> to create a tailored proposal component using IBM Granite.
+          </p>
+        </div>
+        <div class="proposal-token-info hidden" id="proposal-token-info">
+          <span id="proposal-token-text"></span>
+        </div>
+      </div>
+
+      <div class="disclaimer-box mt-md">
+        <strong>⚠️ Important Legal Notice:</strong>
+        AI-generated proposal drafts are a starting point only and may contain inaccuracies.
+        You are solely responsible for verifying all information, reviewing eligibility,
+        complying with submission requirements, and all final submission decisions.
+        FundFlow AI does <strong>not</strong> submit applications on your behalf.
+      </div>
+    </div><!-- /view-proposal -->
+
+
+    <!-- ═══════════ VIEW: TOKEN USAGE ═══════════ -->
+    <div class="view" id="view-tokens">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">Token Usage</h1>
+          <p class="view-sub">Measure IBM Granite token consumption — track before/after optimization.</p>
+        </div>
+        <button class="btn btn-secondary" id="btn-clear-token-log">Clear Log</button>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon-1">📥</div>
+          <div class="kpi-content">
+            <div class="kpi-label">Input Tokens</div>
+            <div class="kpi-value" id="t-input">0</div>
+            <div class="kpi-sub">Session total</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon-2">📤</div>
+          <div class="kpi-content">
+            <div class="kpi-label">Output Tokens</div>
+            <div class="kpi-value" id="t-output">0</div>
+            <div class="kpi-sub">Session total</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon-3">⚡</div>
+          <div class="kpi-content">
+            <div class="kpi-label">Total Tokens</div>
+            <div class="kpi-value" id="t-total">0</div>
+            <div class="kpi-sub">Session total</div>
+          </div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-icon kpi-icon-4">🔗</div>
+          <div class="kpi-content">
+            <div class="kpi-label">API Calls</div>
+            <div class="kpi-value" id="t-calls">0</div>
+            <div class="kpi-sub">This session</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card mt-lg">
+        <div class="card-header">Token Log</div>
+        <div id="token-log" class="token-log">
+          <p class="text-muted" style="padding:16px;">No API calls made yet in this session.</p>
+        </div>
+        <div class="token-note">
+          <strong>Note:</strong> Token counts are captured directly from the IBM Granite API response
+          (usage.prompt_tokens, usage.completion_tokens, usage.total_tokens).
+          If the API does not return usage data, counts show as N/A — no fabricated numbers.
+        </div>
+      </div>
+    </div><!-- /view-tokens -->
+
+
+    <!-- ═══════════ VIEW: SETTINGS ═══════════ -->
+    <div class="view" id="view-settings">
+      <div class="view-header">
+        <div>
+          <h1 class="view-title">Settings</h1>
+          <p class="view-sub">Application preferences and IBM Granite configuration status.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">Appearance</div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Dark Mode</div>
+            <div class="settings-row-sub">Switch between light green and dark navy themes</div>
+          </div>
+          <button class="toggle-pill" id="settings-dark-toggle" aria-label="Toggle dark mode"></button>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">IBM Granite Status</div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">API Key</div>
+            <div class="settings-row-sub">IBM_API_KEY environment variable</div>
+          </div>
+          <span class="elig-badge" id="cfg-api-key">Checking…</span>
+        </div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Granite URL</div>
+            <div class="settings-row-sub">IBM_GRANITE_URL environment variable</div>
+          </div>
+          <span class="elig-badge" id="cfg-url">Checking…</span>
+        </div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Model ID</div>
+            <div class="settings-row-sub">IBM_GRANITE_MODEL_ID environment variable</div>
+          </div>
+          <span class="elig-badge" id="cfg-model">Checking…</span>
+        </div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Project ID</div>
+            <div class="settings-row-sub">IBM_PROJECT_ID (UUID v4) — required for API calls</div>
+          </div>
+          <span class="elig-badge" id="cfg-project">Checking…</span>
+        </div>
+        <div class="settings-row" style="border-bottom:none;">
+          <div>
+            <div class="settings-row-label">Knowledge Base</div>
+            <div class="settings-row-sub">Curated funding records loaded</div>
+          </div>
+          <span class="elig-badge elig-eligible" id="cfg-kb">—</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header">About FundFlow AI</div>
+        <div class="settings-row">
+          <div>
+            <div class="settings-row-label">Project</div>
+            <div class="settings-row-sub">IBM AICTE Internship — Problem Statement #18</div>
+          </div>
+          <span style="font-size:12px;color:var(--txt-4);">AI Grant &amp; Funding Finder</span>
+        </div>
+        <div class="settings-row" style="border-bottom:none;">
+          <div>
+            <div class="settings-row-label">Architecture</div>
+            <div class="settings-row-sub">Agentic AI + RAG · Flask · IBM Granite</div>
+          </div>
+          <span style="font-size:12px;color:var(--txt-4);">5 Agents</span>
+        </div>
+      </div>
+    </div><!-- /view-settings -->
+
+  </main>
+</div><!-- /app-shell -->
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<!-- Opportunity card template -->
+<template id="opp-card-tpl">
+  <article class="opp-card">
+    <div class="opp-card__top">
+      <div class="opp-card__left">
+        <div class="opp-type-tag"></div>
+        <h3 class="opp-name"></h3>
+        <div class="opp-org"></div>
+      </div>
+      <div class="opp-score-ring">
+        <div class="score-value"></div>
+        <div class="score-label">AI Score</div>
+      </div>
+    </div>
+    <div class="opp-card__eligibility">
+      <span class="elig-badge"></span>
+      <span class="elig-reason"></span>
+    </div>
+    <div class="opp-card__meta"></div>
+    <div class="opp-ai-note"></div>
+    <div class="opp-card__footer">
+      <a class="source-link" target="_blank" rel="noopener noreferrer"></a>
+      <div class="opp-card__actions">
+        <button class="btn btn-ghost btn-sm btn-proposal">Generate Proposal →</button>
+        <a class="btn btn-outline btn-sm btn-apply" target="_blank" rel="noopener noreferrer">Apply ↗</a>
+      </div>
+    </div>
+    <div class="opp-verification-bar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="12" height="12"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      <span></span>
+    </div>
+  </article>
+</template>
+
+<script>
+/* ================================================================
+   FundFlow AI — Frontend Controller
+   SECURITY: Zero credentials here. All /api/* calls are backend-only.
+   ================================================================ */
+const API = "";
+
+// ── State ─────────────────────────────────────────────────────
+const tokenSession = { input: 0, output: 0, total: 0, calls: 0 };
+let lastOpportunities = [];
+let lastProfile = {};
+let isDark = false;
+
+// ── Theme ─────────────────────────────────────────────────────
+function applyTheme(dark) {
+  isDark = dark;
+  document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+  document.getElementById("theme-toggle").textContent = dark ? "☀️" : "🌙";
+  const sp = document.getElementById("settings-dark-toggle");
+  if (sp) sp.classList.toggle("on", dark);
+  localStorage.setItem("ff-theme", dark ? "dark" : "light");
+}
+
+document.getElementById("theme-toggle").addEventListener("click", () => applyTheme(!isDark));
+
+// Restore saved theme
+const saved = localStorage.getItem("ff-theme");
+if (saved === "dark") applyTheme(true);
+
+// ── Navigation ─────────────────────────────────────────────────
+const viewTitles = { dashboard:"Dashboard", profile:"Startup Profile", results:"Funding Results", proposal:"Proposal Assistant", tokens:"Token Usage", settings:"Settings" };
+
+function showView(name) {
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  document.querySelectorAll(".nav-link").forEach(l => l.classList.remove("active"));
+  const v = document.getElementById(`view-${name}`);
+  if (v) v.classList.add("active");
+  const l = document.querySelector(`.nav-link[data-view="${name}"]`);
+  if (l) l.classList.add("active");
+  document.getElementById("page-title").textContent = viewTitles[name] || name;
+  // Close mobile sidebar
+  document.getElementById("sidebar").classList.remove("sidebar--open");
+}
+
+document.querySelectorAll(".nav-link[data-view]").forEach(link => {
+  link.addEventListener("click", e => { e.preventDefault(); showView(link.dataset.view); });
+});
+
+document.getElementById("btn-new-search").addEventListener("click", () => showView("profile"));
+document.getElementById("btn-goto-profile-2").addEventListener("click", () => showView("profile"));
+document.getElementById("menu-btn").addEventListener("click", () => {
+  document.getElementById("sidebar").classList.toggle("sidebar--open");
+});
+
+// Settings dark toggle pill
+document.getElementById("settings-dark-toggle")?.addEventListener("click", function() {
+  applyTheme(!isDark);
+});
+
+// ── Toast ──────────────────────────────────────────────────────
+function toast(msg, type = "info", ms = 4500) {
+  const el = document.createElement("div");
+  el.className = `toast toast-${type}`;
+  el.textContent = msg;
+  document.getElementById("toast-container").appendChild(el);
+  setTimeout(() => el.remove(), ms);
+}
+
+// ── Granite status ─────────────────────────────────────────────
+function setGraniteStatus(state) {
+  const dot   = document.getElementById("granite-dot");
+  const label = document.getElementById("granite-label");
+  const chip  = document.getElementById("granite-status");
+  dot.className   = `granite-dot granite-dot--${state}`;
+  chip.className  = `granite-chip granite-chip--${state}`;
+  const lbl = { idle:"IBM Granite Ready", active:"IBM Granite Active", warn:"Credentials Needed", error:"Granite Offline" };
+  label.textContent = lbl[state] || "IBM Granite";
+}
+
+// ── Health check ───────────────────────────────────────────────
+async function checkHealth() {
+  try {
+    const r = await fetch(`${API}/api/health`);
+    const d = await r.json();
+    const badge = document.getElementById("api-badge");
+    if (d.status === "ok") {
+      badge.textContent = "● API Online";
+      badge.className = "api-badge";
+      const g = d.granite;
+      // Update settings config badges
+      setCfgBadge("cfg-api-key",  g.api_key_set);
+      setCfgBadge("cfg-url",      g.url_set);
+      setCfgBadge("cfg-model",    g.model_id_set);
+      setCfgBadge("cfg-project",  g.project_id_set);
+      const kbEl = document.getElementById("cfg-kb");
+      if (kbEl) { kbEl.textContent = `${d.kb_records} records`; kbEl.className = "elig-badge elig-eligible"; }
+      const allSet = g.api_key_set && g.url_set && g.model_id_set;
+      setGraniteStatus(allSet ? "idle" : "warn");
+      if (!g.project_id_set) {
+        toast("IBM_PROJECT_ID not set. Add your watsonx.ai Project ID (UUID) to .env.", "warning", 8000);
+      }
+    }
+  } catch {
+    document.getElementById("api-badge").className = "api-badge api-badge--offline";
+    document.getElementById("api-badge").textContent = "● API Offline";
+    toast("Cannot reach Flask backend. Run: python App.py", "error", 8000);
+    setGraniteStatus("error");
+  }
+}
+
+function setCfgBadge(id, isSet) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = isSet ? "✓ Set" : "✗ Missing";
+  el.className = `elig-badge ${isSet ? "elig-eligible" : "elig-not-eligible"}`;
+}
+
+// Test Granite
+document.getElementById("btn-test-granite").addEventListener("click", async () => {
+  setGraniteStatus("active");
+  toast("Testing IBM Granite…", "info", 3000);
+  try {
+    const r = await fetch(`${API}/api/test-granite`);
+    const d = await r.json();
+    if (d.connected) {
+      setGraniteStatus("idle");
+      toast(`✓ IBM Granite connected! Model: ${d.model_id}`, "success");
+      trackTokens(d.input_tokens, d.output_tokens, "Granite connectivity test");
+    } else {
+      setGraniteStatus("error");
+      toast(`Granite: ${d.error}`, "error", 8000);
+    }
+  } catch { setGraniteStatus("error"); toast("Test failed — check backend.", "error"); }
+});
+
+// ── Token tracking ─────────────────────────────────────────────
+function trackTokens(inp, out, label = "") {
+  const i = inp ?? 0, o = out ?? 0;
+  if (inp != null) tokenSession.input  += i;
+  if (out != null) tokenSession.output += o;
+  if (inp != null || out != null) tokenSession.total += (i + o);
+  tokenSession.calls++;
+  document.getElementById("t-input").textContent  = tokenSession.input  || "—";
+  document.getElementById("t-output").textContent = tokenSession.output || "—";
+  document.getElementById("t-total").textContent  = tokenSession.total  || "—";
+  document.getElementById("t-calls").textContent  = tokenSession.calls;
+  document.getElementById("kpi-tokens").textContent = tokenSession.total ? tokenSession.total.toLocaleString() : "—";
+  const logEl = document.getElementById("token-log");
+  const entry = document.createElement("div");
+  entry.className = "token-entry";
+  entry.innerHTML = `<span class="te-label">${escHtml(label)}</span><span class="te-val">In: ${inp ?? "N/A"} | Out: ${out ?? "N/A"} | Total: ${(inp != null || out != null) ? (i+o) : "N/A"}</span>`;
+  if (logEl.querySelector("p")) logEl.innerHTML = "";
+  logEl.prepend(entry);
+}
+
+function trackUsage(usage, label = "") {
+  if (!usage) return;
+  trackTokens(usage.input_tokens, usage.output_tokens, label);
+}
+
+document.getElementById("btn-clear-token-log").addEventListener("click", () => {
+  tokenSession.input = tokenSession.output = tokenSession.total = tokenSession.calls = 0;
+  document.getElementById("token-log").innerHTML = '<p class="text-muted" style="padding:16px;">Log cleared.</p>';
+  ["t-input","t-output","t-total","t-calls","kpi-tokens"].forEach(id => {
+    document.getElementById(id).textContent = id === "t-calls" ? "0" : "—";
+  });
+});
+
+// ── Pipeline helpers ───────────────────────────────────────────
+function setPipeStep(step, state, msg) {
+  const item = document.getElementById(`ps-${step}`);
+  if (!item) return;
+  item.querySelector(".ps-dot").className = `ps-dot ps-dot--${state}`;
+  const s = document.getElementById(`ps-${step}-status`);
+  if (s) s.textContent = msg || state;
+}
+function resetPipeline() {
+  ["discovery","eligibility","ranking","verification"].forEach(s => setPipeStep(s,"pending","Waiting"));
+}
+
+// ── Profile form submit ────────────────────────────────────────
+document.getElementById("profile-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const fd = new FormData(e.target);
+  const profile = Object.fromEntries(fd.entries());
+  if (profile.funding_need) profile.funding_need = Number(profile.funding_need) || 0;
+  if (!profile.name || !profile.domain || !profile.stage) {
+    toast("Please fill in Startup Name, Domain, and Stage.", "warning"); return;
+  }
+  lastProfile = profile;
+  document.getElementById("btn-discover-text").textContent = "Analysing…";
+  document.getElementById("btn-discover").disabled = true;
+  document.getElementById("pipeline-status-card").classList.remove("hidden");
+  resetPipeline();
+  setGraniteStatus("active");
+  setPipeStep("discovery","active","Running…");
+  await sleep(400); setPipeStep("eligibility","active","Running…");
+  await sleep(300); setPipeStep("ranking","active","Running…");
+  await sleep(300); setPipeStep("verification","active","Running…");
+  try {
+    const resp = await fetch(`${API}/api/find-funding`, {
+      method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(profile)
+    });
+    const data = await resp.json();
+    ["discovery","eligibility","ranking","verification"].forEach(s => setPipeStep(s,"done","Complete"));
+    setGraniteStatus("idle");
+    if (data.error) toast(`Error: ${data.error}`, "error", 8000);
+    if (data.token_usage) trackUsage(data.token_usage, `Find funding: ${profile.name}`);
+    lastOpportunities = data.opportunities || [];
+    renderResults(lastOpportunities, data.meta);
+    updateKPIs(lastOpportunities);
+    buildProposalSelector(lastOpportunities);
+    showView("results");
+    toast(`Found ${lastOpportunities.length} matching opportunities.`, "success");
+  } catch (err) {
+    ["discovery","eligibility","ranking","verification"].forEach(s => setPipeStep(s,"error","Failed"));
+    setGraniteStatus("error");
+    toast("Search failed. Is the Flask backend running?", "error", 8000);
+  } finally {
+    document.getElementById("btn-discover-text").textContent = "Discover Funding";
+    document.getElementById("btn-discover").disabled = false;
+    document.getElementById("pipeline-status-card").classList.add("hidden");
+  }
+});
+
+// ── Render results ─────────────────────────────────────────────
+function renderResults(opps, meta) {
+  const grid   = document.getElementById("opp-grid");
+  const empty  = document.getElementById("empty-results");
+  const notice = document.getElementById("source-notice");
+  grid.innerHTML = "";
+  if (!opps || !opps.length) {
+    empty.classList.remove("hidden"); grid.classList.add("hidden"); notice.style.display = "none";
+    document.getElementById("results-subtitle").textContent = meta?.status || "No results found.";
+    return;
+  }
+  empty.classList.add("hidden"); grid.classList.remove("hidden"); notice.style.display = "block";
+  document.getElementById("nav-count").textContent = opps.length;
+  document.getElementById("results-subtitle").textContent =
+    `${opps.length} ranked opportunities for ${meta?.profile_name || "your startup"}.`;
+  opps.forEach(opp => grid.appendChild(buildCard(opp)));
+}
+
+function buildCard(opp) {
+  const tpl  = document.getElementById("opp-card-tpl");
+  const card = tpl.content.cloneNode(true).querySelector(".opp-card");
+  card.querySelector(".opp-type-tag").textContent = opp.type || "Funding";
+  card.querySelector(".opp-name").textContent     = opp.name || "Untitled";
+  card.querySelector(".opp-org").textContent      = opp.organization || "";
+  const score = opp.match_score ?? 50;
+  const ring  = card.querySelector(".opp-score-ring");
+  ring.querySelector(".score-value").textContent  = score;
+  ring.classList.add(score >= 70 ? "score-high" : score >= 45 ? "score-mid" : "score-low");
+  if (opp.match_reason) ring.title = `Match: ${opp.match_reason}`;
+  const elig = opp.eligibility || "possibly-eligible";
+  const eb   = card.querySelector(".elig-badge");
+  eb.textContent = opp.eligibility_label || "Possibly Eligible";
+  eb.className   = `elig-badge elig-${elig}`;
+  card.querySelector(".elig-reason").textContent = opp.eligibility_reason || "";
+  if (opp.eligibility_gap) {
+    const gap = document.createElement("div");
+    gap.className = "gap-warning"; gap.textContent = `⚠️ Gap: ${opp.eligibility_gap}`;
+    card.querySelector(".opp-card__eligibility").appendChild(gap);
+  }
+  const meta = card.querySelector(".opp-card__meta");
+  [
+    opp.amount_display         ? `💰 ${opp.amount_display}` : null,
+    opp.eligible_locations?.join(", ") ? `📍 ${opp.eligible_locations.join(", ")}` : null,
+    opp.eligible_stages?.length        ? `📈 ${opp.eligible_stages.join(", ")}` : null,
+    opp.deadline_notes         ? `⏰ ${opp.deadline_notes.slice(0,60)}…` : null,
+  ].filter(Boolean).forEach(c => {
+    const ch = document.createElement("span"); ch.className = "meta-chip"; ch.textContent = c; meta.appendChild(ch);
+  });
+  const aiNote = card.querySelector(".opp-ai-note");
+  if (opp.ai_note) { aiNote.textContent = `🤖 ${opp.ai_note}`; aiNote.classList.add("ai-note"); }
+  const src = card.querySelector(".source-link");
+  if (opp.source_url || opp.application_url) {
+    src.href = opp.source_url || opp.application_url;
+    src.textContent = `↗ ${opp.organization || "Official Source"}`;
+  } else { src.style.display = "none"; }
+  const apply = card.querySelector(".btn-apply");
+  if (opp.application_url) apply.href = opp.application_url; else apply.style.display = "none";
+  card.querySelector(".btn-proposal").addEventListener("click", () => goToProposal(opp));
+  const vbar = card.querySelector(".opp-verification-bar");
+  vbar.querySelector("span").textContent = opp.source_grounded
+    ? `Source-grounded · Last verified: ${opp.last_verified || "unknown"}`
+    : "Source pending verification · Confirm on official portal before applying";
+  if (!opp.source_grounded) vbar.classList.add("vbar-warn");
+  return card;
+}
+
+// ── Filter chips ───────────────────────────────────────────────
+document.querySelectorAll(".filter-chip").forEach(chip => {
+  chip.addEventListener("click", () => {
+    document.querySelectorAll(".filter-chip").forEach(c => c.classList.remove("active"));
+    chip.classList.add("active");
+    const f = chip.dataset.filter;
+    document.querySelectorAll(".opp-card").forEach(card => {
+      const elig = card.querySelector(".elig-badge")?.className || "";
+      card.style.display = (f === "all" || elig.includes(f)) ? "" : "none";
+    });
+  });
+});
+
+// ── KPI update ─────────────────────────────────────────────────
+function updateKPIs(opps) {
+  document.getElementById("kpi-found").textContent   = opps.length;
+  document.getElementById("kpi-eligible").textContent = opps.filter(o => o.eligibility === "eligible").length;
+  const best = opps.length ? Math.max(...opps.map(o => o.match_score || 0)) : 0;
+  document.getElementById("kpi-best-score").textContent = best || "—";
+}
+
+// ── Proposal ───────────────────────────────────────────────────
+function buildProposalSelector(opps) {
+  const listEl = document.getElementById("proposal-opp-list");
+  listEl.innerHTML = "";
+  if (!opps.length) {
+    listEl.innerHTML = '<p class="text-muted" style="padding:16px;">No opportunities. Run a search first.</p>'; return;
+  }
+  opps.forEach(opp => {
+    const btn = document.createElement("button");
+    btn.className = "opp-select-btn";
+    btn.innerHTML = `<span class="osb-name">${escHtml(opp.name)}</span><span class="osb-meta">${escHtml(opp.type)} · ${escHtml(opp.amount_display)}</span><span class="btn btn-primary btn-sm">Generate Draft</span>`;
+    btn.addEventListener("click", () => generateProposal(opp));
+    listEl.appendChild(btn);
+  });
+}
+
+function goToProposal(opp) {
+  buildProposalSelector(lastOpportunities);
+  showView("proposal");
+  generateProposal(opp);
+}
+
+async function generateProposal(opp) {
+  const output   = document.getElementById("proposal-output");
+  const copyBtn  = document.getElementById("btn-copy-draft");
+  const clearBtn = document.getElementById("btn-clear-draft");
+  const tokInfo  = document.getElementById("proposal-token-info");
+  output.innerHTML = '<div class="proposal-loading"><div class="spinner"></div><span>IBM Granite is generating your draft proposal…</span></div>';
+  copyBtn.disabled = clearBtn.disabled = true;
+  tokInfo.classList.add("hidden");
+  setGraniteStatus("active");
+  try {
+    const resp = await fetch(`${API}/api/generate-proposal`, {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ startup_profile: lastProfile, opportunity: opp })
+    });
+    const data = await resp.json();
+    setGraniteStatus("idle");
+    if (data.error && !data.draft) { toast(`Proposal error: ${data.error}`, "error", 8000); return; }
+    output.innerHTML = renderMarkdown(data.draft || "");
+    copyBtn.disabled = clearBtn.disabled = false;
+    if (data.token_usage) {
+      trackUsage(data.token_usage, `Proposal: ${opp.name}`);
+      const u = data.token_usage;
+      document.getElementById("proposal-token-text").textContent =
+        `IBM Granite usage — Input: ${u.input_tokens ?? "N/A"} | Output: ${u.output_tokens ?? "N/A"} | Total: ${u.total_tokens ?? "N/A"}`;
+      tokInfo.classList.remove("hidden");
+    }
+    document.getElementById("section-proposal")?.scrollIntoView({ behavior:"smooth" });
+    toast("Draft generated. Review carefully before use.", "success");
+  } catch {
+    setGraniteStatus("error");
+    toast("Proposal generation failed.", "error");
+    output.innerHTML = '<p class="text-muted" style="padding:20px;">Generation failed — check backend connection.</p>';
+  }
+}
+
+document.getElementById("btn-copy-draft").addEventListener("click", () => {
+  navigator.clipboard.writeText(document.getElementById("proposal-output").innerText || "")
+    .then(() => toast("Draft copied to clipboard.", "success", 2000));
+});
+document.getElementById("btn-clear-draft").addEventListener("click", () => {
+  document.getElementById("proposal-output").innerHTML = '<p class="text-muted" style="padding:24px 20px;">Cleared. Select an opportunity to generate a new draft.</p>';
+  document.getElementById("btn-copy-draft").disabled = document.getElementById("btn-clear-draft").disabled = true;
+  document.getElementById("proposal-token-info").classList.add("hidden");
+});
+
+// ── Markdown lite renderer ─────────────────────────────────────
+function renderMarkdown(text) {
+  const lines = escHtml(text).split("\n");
+  let html = "";
+  for (const line of lines) {
+    if (line.startsWith("## "))      html += `<h3 class="proposal-h">${line.slice(3)}</h3>`;
+    else if (line.startsWith("# "))  html += `<h2 class="proposal-h2">${line.slice(2)}</h2>`;
+    else if (line.startsWith("⚠️"))  html += `<div class="draft-warn">${line}</div>`;
+    else if (line.trim() === "")     html += `<br>`;
+    else                             html += `<p class="proposal-p">${line}</p>`;
+  }
+  return html;
+}
+
+// ── Utils ──────────────────────────────────────────────────────
+function escHtml(s) { const d = document.createElement("div"); d.appendChild(document.createTextNode(String(s||""))); return d.innerHTML; }
+function sleep(ms)  { return new Promise(r => setTimeout(r, ms)); }
+
+// ── Init ───────────────────────────────────────────────────────
+checkHealth();
+</script>
+
+</body>
+</html>

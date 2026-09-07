@@ -1,0 +1,50 @@
+﻿# FundFlow AI — Git Ignore
+# ============================================================
+# CRITICAL: .env contains real API keys — never commit it!
+# ============================================================
+
+# Environment / secrets
+.env
+*.env
+.env.*
+!env.example
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+.virtualenv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log

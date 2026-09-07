@@ -1,0 +1,20 @@
+# ============================================================
+# FundFlow AI — Python Dependencies
+# IBM AICTE Internship · Problem Statement #18
+# ============================================================
+# Install: pip install -r requirements.txt
+#
+# Only libraries actually used in the current implementation.
+# ============================================================
+
+# Web framework
+flask==3.0.3
+
+# CORS support — allows HTML frontend to call Flask API
+flask-cors==4.0.1
+
+# Environment variable loader (.env support)
+python-dotenv==1.0.1
+
+# HTTP client — IBM IAM token + IBM Granite REST API calls
+requests==2.32.3
